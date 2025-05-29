@@ -75,6 +75,9 @@ transform: scale(1.3, 3); /* Change the scale for mobile devices */
     display: flex; /* Use flexbox for alignment */
     flex-direction: column-reverse; /* Stack children vertically */
     justify-content: flex-end; /* Align children to the bottom */
+    position: relative; /* Ensure the block is positioned for absolute children */
+    filter: grayscale(100%); /* Start with black and white */
+    transition: filter 0.3s ease; /* Smooth transition for grayscale */
 }
 
 /*navbar options */
@@ -249,6 +252,7 @@ transform: scale(1.3, 3); /* Change the scale for mobile devices */
     text-decoration: none; /* Keep no underline on hover */
     color: rgb(255, 255, 255); /* Change color to red */
 }
+
 .block {
     font-size: 0.9rem;
     color: rgb(255, 255, 255); /* Change color to white */
@@ -271,6 +275,27 @@ transform: scale(1.3, 3); /* Change the scale for mobile devices */
 
 .block:hover {
     filter: grayscale(0%); /* Remove grayscale on hover */
+}
+
+/* Tooltip styles */
+.block::after {
+    content: attr(title); /* Use the title attribute for the tooltip */
+    position: absolute;
+    bottom: 100%; /* Position above the block */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Center the tooltip */
+    background-color: rgba(0, 0, 0, 0.8); /* Dark background */
+    color: white; /* White text */
+    padding: 5px 10px; /* Padding for the tooltip */
+    border-radius: 5px; /* Rounded corners */
+    white-space: nowrap; /* Prevent text wrapping */
+    opacity: 0; /* Start hidden */
+    transition: opacity 0.1s ease; /* Quick transition for visibility */
+    pointer-events: none; /* Prevent mouse events on the tooltip */
+}
+
+.block:hover::after {
+    opacity: 1; /* Show tooltip on hover */
 }
 
 .thumbnail {
