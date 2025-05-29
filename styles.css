@@ -9,7 +9,7 @@ body {
     
 }
 /* hide the channel link name */ 
-.hide{display: none;}
+.hide{display: none;} 
 
 .bio{
     font: arial;
