@@ -1,8 +1,14 @@
 const channelSlug = 'full-archive-l-s-l-a-s-r-i-d'; // Channel slug
 const apiUrl = `https://api.are.na/v2/channels/${channelSlug}/contents?per=10000`; // Fetch 10000 blocks per request
 let totalBlocks = []; // Array to hold all blocks
-const channelLink = document.getElementById('channel-link');
-channelLink.textContent = channelSlug; 
+
+document.addEventListener('DOMContentLoaded', () => {
+    const channelLink = document.getElementById('channel-link');
+    channelLink.textContent = channelSlug;
+
+    // Fetch channel contents on page load
+    fetchChannelContents();
+});
 
 async function fetchChannelContents(page = 1) {
     try {
@@ -37,6 +43,9 @@ function displayBlocks(blocks) {
         const blockElement = document.createElement('div');
         blockElement.classList.add('block');
 
+        // Set the title attribute for hover text
+        blockElement.setAttribute('title', block.title || 'Untitled'); // Tooltip text
+
         // Handle different block types
         if (block.class === 'Image') {
             blockElement.innerHTML = `<img src="${block.image.display.url}" alt="${block.title || 'Image'}">`;
@@ -53,11 +62,12 @@ function displayBlocks(blocks) {
         
         } else if (block.class === 'Link') {
             const thumbnailUrl = block.image ? block.image.thumb.url : ''; // Get thumbnail URL
+            
             blockElement.innerHTML = `
-                <h3>${block.title || 'Untitled'}</h3>
-                <a href="${block.source ? block.source.url : '#'}" target="_blank">
-                    <img class="thumbnail" src="${thumbnailUrl}" alt="${block.title || 'Thumbnail'}">
+                 <a href="${block.source ? block.source.url : '#'}" target="_blank">
+                     <img class="thumbnail" src="${thumbnailUrl}" alt="Thumbnail">
                 </a>`;
+
         } else if (block.class === 'Media') {
             const thumbnailUrl = block.image ? block.image.thumb.url : '';
             blockElement.innerHTML = `
@@ -87,6 +97,3 @@ function displayBlocks(blocks) {
         blocksContainer.appendChild(blockElement);    
     });
 }
-
-// Fetch channel contents on page load
-fetchChannelContents();
