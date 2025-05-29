@@ -1,6 +1,6 @@
 const channelSlug = 'full-archive-l-s-l-a-s-r-i-d'; // Channel slug
 const apiUrl = `https://api.are.na/v2/channels/${channelSlug}/contents?per=10000`; // Fetch 10000 blocks per request
-let totalBlocks = []; // Array to hold all blocks
+let totalBlocks = []; // Array to hold all blocks 
 
 document.addEventListener('DOMContentLoaded', () => {
     const channelLink = document.getElementById('channel-link');
