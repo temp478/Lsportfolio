@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Bar Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #f0f0f0;
+        }
+
+        /* Search section styling */
+        .search-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .search-section input, 
+        .search-section select, 
+        .search-section button {
+            background-color: rgba(255, 255, 255, 0.7);
+            border: 1px solid #000;
+            padding: 5px;
+            font-size: 14px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .content-card {
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-title {
+            font-weight: bold;
+        }
+
+        .card-author {
+            color: #555;
+        }
+
+        .card-hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="search-section">
+        <input type="text" id="search-input" placeholder="SEARCH">
+        <select id="artist-filter">
+            <option value="">ARTIST</option>
+            <option value="KINKED">KINKED</option>
+            <option value="ADRIANO CAVA">ADRIANO CAVA</option>
+            <option value="NOT399093">NOT399093</option>
+            <option value="EQUOHM">EQUOHM</option>
+            <option value="DORI SORRIDE">DORI SORRIDE</option>
+        </select>
+        <button id="reset-filters">RESET</button>
+    </div>
+
+    <div class="content-grid" id="content-grid">
+        <div class="content-card" data-artist="KINKED">
+            <div class="card-title">THE FIRE CHILLED THE AIR AND THE AIR BECOME THE GREAT WIND</div>
+            <div class="card-author">KINKED</div>
+        </div>
+        <div class="content-card" data-artist="ADRIANO CAVA">
+            <div class="card-title">HYPER-WEIRDNESS VOL.1</div>
+            <div class="card-author">ADRIANO CAVA</div>
+        </div>
+        <div class="content-card" data-artist="NOT399093">
+            <div class="card-title">POSTHUMAN FEATURES</div>
+            <div class="card-author">NOT399093</div>
+        </div>
+        <div class="content-card" data-artist="MISTO MAME COLLECTIVE">
+            <div class="card-title">ABSTRACT CONCRETISM</div>
+            <div class="card-author">MISTO MAME COLLECTIVE</div>
+        </div>
+        <div class="content-card" data-artist="KINKED">
+            <div class="card-title">EARLY EXPERIMENTS</div>
+            <div class="card-author">KINKED</div>
+        </div>
+        <div class="content-card" data-artist="NOT399093">
+            <div class="card-title">FUTURE MEMORIES</div>
+            <div class="card-author">NOT399093</div>
+        </div>
+    </div>
+
+    <script>
+        // Grab all the necessary elements
+        const searchInput = document.getElementById('search-input');
+        const artistFilter = document.getElementById('artist-filter');
+        const resetButton = document.getElementById('reset-filters');
+        const cards = document.querySelectorAll('.content-card');
+
+        // Function to filter the cards
+        function filterCards() {
+            const searchTerm = searchInput.value.toUpperCase();
+            const artist = artistFilter.value.toUpperCase();
+
+            cards.forEach(card => {
+                const cardArtist = card.getAttribute('data-artist');
+                const cardText = card.textContent.toUpperCase();
+
+                // Check if the card matches the filters
+                const matchesSearch = !searchTerm || cardText.includes(searchTerm);
+                const matchesArtist = !artist || cardArtist === artist;
+
+                // Show or hide the card based on the filters
+                if (matchesSearch && matchesArtist) {
+                    card.classList.remove('card-hidden');
+                } else {
+                    card.classList.add('card-hidden');
+                }
+            });
+        }
+
+        // Add event listeners to all filters
+        searchInput.addEventListener('input', filterCards);
+        artistFilter.addEventListener('change', filterCards);
+
+        // Reset all filters
+        resetButton.addEventListener('click', function() {
+            searchInput.value = '';
+            artistFilter.selectedIndex = 0;
+
+            // Show all cards
+            cards.forEach(card => {
+                card.classList.remove('card-hidden');
+            });
+        });
+    </script>
+</body>
+</html>
